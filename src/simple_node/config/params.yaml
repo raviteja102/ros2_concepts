@@ -1,5 +1,4 @@
 simple_node:
-  ros__parameters: 
+  ros__parameters:
     topic_name_ : "simple_node"
     time_interval_: 1000
-

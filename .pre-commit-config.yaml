@@ -1,0 +1,26 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        language_version: python3
+
+  - repo: https://github.com/cpplint/cpplint
+    rev: 2.0.2 # Will be frozen by pre-commit autoupdate
+    hooks:
+      - id: cpplint
+        args: ["--linelength=100", "--filter=-runtime/string"]
+        files: \.(cpp|hpp)$
+
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v20.1.8
+    hooks:
+      - id: clang-format
+        args: [--style=file]
+        files: \.(cpp|hpp|c|h)$

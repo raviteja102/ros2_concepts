@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(simple_node)
+enable_testing()
+
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -24,21 +26,26 @@ include_directories(include)
 add_executable(simple_node src/SimpleNode.cpp)
 ament_target_dependencies(simple_node rclcpp std_msgs)
 
-install(TARGETS 
+
+install(TARGETS
 simple_node
 DESTINATION lib/${PROJECT_NAME}
 )
 
-install (DIRECTORY config
+install(DIRECTORY config
 DESTINATION share/${PROJECT_NAME}/
 )
 
-install (DIRECTORY launch
+install(DIRECTORY launch
 DESTINATION share/${PROJECT_NAME}/
 )
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
+  find_package(ament_cmake_gtest REQUIRED)
+  ament_add_gtest(test_simple_node tests/simple_node_test.cpp)
+  target_include_directories(test_simple_node PRIVATE include)
+  ament_target_dependencies(test_simple_node rclcpp std_msgs)
   # the following line skips the linter which checks for copyrights
   # uncomment the line when a copyright and license is not present in all source files
   #set(ament_cmake_copyright_FOUND TRUE)
