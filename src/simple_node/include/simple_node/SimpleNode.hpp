@@ -9,10 +9,10 @@
 #include <string>
 
 class SimpleNode : public rclcpp::Node {
- public:
+public:
   SimpleNode();
 
- private:
+private:
   std::string topic_name_;
   int time_interval_;
   int counter_ = 0;

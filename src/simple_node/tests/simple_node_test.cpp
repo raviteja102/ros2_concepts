@@ -3,7 +3,4 @@
 
 #include <gtest/gtest.h>
 
-TEST(SimpleNodeTest, TestIsTrue)
-{
-    EXPECT_TRUE(true);
-}
+TEST(SimpleNodeTest, TestIsTrue) { EXPECT_TRUE(true); }
