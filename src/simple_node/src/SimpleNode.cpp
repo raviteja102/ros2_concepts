@@ -2,7 +2,8 @@
 // Licensed under the Apache License, Version 2.0
 
 #include "simple_node/SimpleNode.hpp"
-#include "std_msgs/msg/string.hpp"
+
+// C++ system headers
 #include <memory>
 #include <string>
 
