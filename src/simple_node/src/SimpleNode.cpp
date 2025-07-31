@@ -17,7 +17,7 @@ SimpleNode::SimpleNode() : Node("simple_node") {
 
   publisher_ = this->create_publisher<std_msgs::msg::String>(topic_name_, 10);
 
-  subscriber = this->create_subscription<std_msgs::msg::String>(
+  subscriber_ = this->create_subscription<std_msgs::msg::String>(
       topic_name_, 10,
       std::bind(&SimpleNode::subscriberCallback, this, std::placeholders::_1));
 
@@ -41,12 +41,4 @@ void SimpleNode::timerCallback() {
               "Publishing messages with a interval of %d milliseconds, with "
               "the message %s",
               time_interval_, message.data.c_str());
-}
-
-int main(int argc, const char *argv[]) {
-  rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<SimpleNode>());
-  rclcpp::shutdown();
-
-  return 0;
 }

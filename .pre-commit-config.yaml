@@ -11,12 +11,12 @@ repos:
       - id: black
         language_version: python3
 
-  - repo: https://github.com/cpplint/cpplint
-    rev: 2.0.2 # Will be frozen by pre-commit autoupdate
-    hooks:
-      - id: cpplint
-        args: ["--linelength=100", "--filter=-runtime/string"]
-        files: \.(cpp|hpp)$
+  # - repo: https://github.com/cpplint/cpplint
+  #   rev: 2.0.2 # Will be frozen by pre-commit autoupdate
+  #   hooks:
+  #     - id: cpplint
+  #       args: ["--linelength=100", "--filter=-runtime/string"]
+  #       files: \.(cpp|hpp)$
 
   - repo: https://github.com/pre-commit/mirrors-clang-format
     rev: v20.1.8

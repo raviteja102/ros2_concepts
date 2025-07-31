@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 project(simple_node)
 enable_testing()
 
-
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 99)
@@ -23,35 +22,47 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
 include_directories(include)
-add_executable(simple_node src/SimpleNode.cpp)
+
+# Build SimpleNode as a library
+add_library(simple_node_lib src/SimpleNode.cpp)
+ament_target_dependencies(simple_node_lib rclcpp std_msgs)
+
+# Build executable that links to the library
+add_executable(simple_node src/main.cpp)  # move your main() here if not already
+target_link_libraries(simple_node simple_node_lib)
 ament_target_dependencies(simple_node rclcpp std_msgs)
 
+#Build executable that links to the library
+add_executable(qos_node src/QOSNode.cpp)
+ament_target_dependencies(qos_node rclcpp std_msgs)
 
 install(TARGETS
-simple_node
-DESTINATION lib/${PROJECT_NAME}
+  simple_node
+  simple_node_lib
+  DESTINATION lib/${PROJECT_NAME}
+)
+install(TARGETS
+  qos_node
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 install(DIRECTORY config
-DESTINATION share/${PROJECT_NAME}/
+  DESTINATION share/${PROJECT_NAME}/
 )
 
 install(DIRECTORY launch
-DESTINATION share/${PROJECT_NAME}/
+  DESTINATION share/${PROJECT_NAME}/
 )
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   find_package(ament_cmake_gtest REQUIRED)
+
   ament_add_gtest(test_simple_node tests/simple_node_test.cpp)
   target_include_directories(test_simple_node PRIVATE include)
+  target_link_libraries(test_simple_node simple_node_lib)  # link test to library
   ament_target_dependencies(test_simple_node rclcpp std_msgs)
-  # the following line skips the linter which checks for copyrights
-  # uncomment the line when a copyright and license is not present in all source files
-  #set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # uncomment the line when this package is not in a git repo
-  #set(ament_cmake_cpplint_FOUND TRUE)
+
   ament_lint_auto_find_test_dependencies()
 endif()
 
